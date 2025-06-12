@@ -52,8 +52,8 @@ export default function HomePage() {
       const parsedTransactions = JSON.parse(data.summary);
       const processed = processTaxData(parsedTransactions);
       setProcessedData(processed);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Ocorreu um erro durante o processamento.');
     } finally {
       setIsLoading(false);
     }
