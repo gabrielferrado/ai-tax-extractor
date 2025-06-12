@@ -1,7 +1,7 @@
 import { COLLAPSED_TAXES, TAXES } from '@/constants';
 import { Tax } from '@/models/tax';
-import { ProcessedData } from '@/models/processedData';
-import { isTaxIncluded, findMatchingTax } from '@/utils/taxUtils';
+import { ProcessedData } from '@/models/processed-data';
+import { isTaxIncluded, findMatchingTax } from '@/utils/tax.utils';
 
 const formatDate = (date: string): string => {
   const [day, month, year] = date.split('/');

@@ -1,6 +1,6 @@
 import { Tax } from './tax';
-import { TaxTable } from './taxTable';
-import { TaxTotals } from './taxTotals';
+import { TaxTable } from './tax-table';
+import { TaxTotals } from './tax-totals';
 
 export interface ProcessedData {
   tables: {
