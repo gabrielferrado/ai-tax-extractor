@@ -1,6 +1,7 @@
 import { PROMPT_2 } from '@/prompts/PROMPT_2';
 import { NextRequest, NextResponse } from 'next/server';
 import { logger } from '@/utils/logger.utils';
+import { CacheService } from '@/services/cache.service';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
@@ -110,6 +111,25 @@ export async function POST(req: NextRequest) {
 
     logger.info('Processing PDF file:', { name: file.name, type: file.type, size: file.size });
 
+    // Check cache first
+    logger.debug('Checking cache for file', {
+      name: file.name,
+      size: file.size
+    });
+    
+    const cached = await CacheService.get(file);
+    
+    if (cached) {
+      logger.info('Returning cached result', { 
+        fileName: file.name,
+        summaryLength: cached.summary.length,
+        contentHash: cached.contentHash
+      });
+      return NextResponse.json({ summary: cached.summary });
+    }
+
+    logger.info('No cache found, proceeding with Gemini processing');
+
     // --- Gemini Upload and Processing Flow ---
 
     // 1. Start the upload to get a unique URL
@@ -134,9 +154,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Failed to generate summary from Gemini." }, { status: 500 });
     }
 
-    // 4. Return the successful summary
+    // 4. Cache the result
     const cleanedSummary = summary.trim().replace(/```json/g, '').replace(/```/g, '');
-    logger.info('Successfully processed request, returning summary', { length: cleanedSummary.length });
+    logger.debug('Attempting to cache result', {
+      fileName: file.name,
+      summaryLength: cleanedSummary.length
+    });
+    
+    await CacheService.set(file, cleanedSummary);
+
+    logger.info('Successfully processed request, returning summary', { 
+      length: cleanedSummary.length,
+      cached: true
+    });
     return NextResponse.json({ summary: cleanedSummary });
   } catch (error) {
     logger.error('Error in /api/summarize (Gemini):', { error });
