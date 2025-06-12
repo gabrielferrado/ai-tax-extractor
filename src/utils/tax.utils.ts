@@ -1,5 +1,5 @@
 import { Tax } from '@/models/tax';
-import { standardize } from '@/utils';
+import { standardize } from './string.utils';
 
 /**
  * Checks if a tax name or subtitle is included in a list of tax names

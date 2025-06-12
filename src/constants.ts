@@ -1,4 +1,4 @@
-import { standardize } from "@/utils";
+import { standardize } from "@/utils/string.utils";
 
 const TAXES = [
     "TARIFA BANCARIA",
