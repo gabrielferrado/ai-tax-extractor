@@ -188,7 +188,7 @@ export default function HomePage() {
                   Total
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-medium text-red-600">
-                  R$ {total.toFixed(2)}
+                  R$ {total.toFixed(2).replace('.', ',')}
                 </td>
               </tr>
             </tbody>
