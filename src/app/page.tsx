@@ -1,7 +1,7 @@
 'use client';
 
 import { Tax } from '@/models/tax';
-import { processTaxData } from '@/services/taxService';
+import { processTaxData } from '@/services/tax.service';
 import { useState, FormEvent, useRef } from 'react';
 
 export default function HomePage() {
