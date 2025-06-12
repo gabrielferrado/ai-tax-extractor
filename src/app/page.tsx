@@ -2,6 +2,7 @@
 
 import { Tax } from '@/models/tax';
 import { processTaxData } from '@/services/tax.service';
+import { logger } from '@/utils/logger.utils';
 import { useState, FormEvent, useRef } from 'react';
 
 export default function HomePage() {
@@ -122,7 +123,7 @@ export default function HomePage() {
       setCopiedTable(tableId);
       setTimeout(() => setCopiedTable(null), 2000);
     } catch (err) {
-      console.error('Failed to copy:', err);
+      logger.error('Failed to copy:', err);
     }
   };
 
