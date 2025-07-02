@@ -3,6 +3,7 @@
 import { Tax } from '@/models/tax';
 import { processTaxData } from '@/services/tax.service';
 import { logger } from '@/utils/logger.utils';
+import { formatToBRL } from '@/utils/string.utils';
 import { useState, FormEvent, useRef } from 'react';
 
 export default function HomePage() {
@@ -179,7 +180,7 @@ export default function HomePage() {
                     )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-medium text-red-600">
-                    {transaction.value}
+                    {formatToBRL(Number(transaction.value))}
                   </td>
                 </tr>
               ))}
@@ -188,7 +189,7 @@ export default function HomePage() {
                   Total
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-medium text-red-600">
-                  R$ {total.toFixed(2).replace('.', ',')}
+                  {formatToBRL(total)}
                 </td>
               </tr>
             </tbody>
